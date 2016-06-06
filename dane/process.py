@@ -5,10 +5,10 @@ points = set()
 with open('locations_wo_originals.json') as fp:
     teams = json.load(fp)
     for t in teams:
-        last = "51.11,17.02"
+        last = "51.1,17.0" # "51.11,17.02"
         last_h = 0
         for l in t:
-            p = l['latitude'][0:5] + "," + l['longitude'][0:5]
+            p = l['latitude'][0:4] + "," + l['longitude'][0:4]
             if l['hours_from_start'] > 0 and p != last:
                 points.add(p)
                 if l['hours_from_start'] > last_h:
