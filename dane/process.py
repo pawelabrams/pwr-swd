@@ -5,7 +5,7 @@ points = set()
 with open('locations_wo_originals.json') as fp:
     teams = json.load(fp)
     for t in teams:
-        last = "Wrocław Wro"
+        last = "51.11,17.02"
         last_h = 0
         for l in t:
             p = l['latitude'][0:5] + "," + l['longitude'][0:5]
