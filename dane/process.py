@@ -2,7 +2,7 @@ import json
 
 paths = {}
 points = set()
-with open('locationsNested.json') as fp:
+with open('locations_wo_originals.json') as fp:
     teams = json.load(fp)
     for t in teams:
         last = "Wrocław Wro"
@@ -12,11 +12,15 @@ with open('locationsNested.json') as fp:
             if l['hours_from_start'] > 0 and p != last: # TODO odwrotnie, jeśli minus?!
                 points.add(p)
                 try:
-                    paths[last+"-"+p].append(l['hours_from_start'] - last_h)
+                    paths[last+"-"+p].append(l['hours_from_start'] - last_h),
                 except:
                     paths[last+"-"+p] = [l['hours_from_start'] - last_h]
                 last = p
                 last_h = l['hours_from_start']
+
+
+
+
 buckets = []
 for x in paths:
     print (x + " " + str(paths[x]))
