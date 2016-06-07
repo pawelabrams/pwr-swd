@@ -1,9 +1,12 @@
+# coding=utf-8
+from __future__ import print_function, unicode_literals
 import json
 
 with open('paths.json') as f:
     paths = json.load(f)
 
-print paths
+for p in paths:
+    print (p, " ", paths[p])
 
 def avg(ls):
     return sum(ls, 0.0) / len(ls)
@@ -15,11 +18,19 @@ def find_adjecent(pos):
             adj.append(path.split("-")[1])
     return adj
 
-def dijkstra(paths, vertex="51.11,17.02"):
+def algo(paths, vertex="51.11,17.02"):
     queue = set()
     dist = dict()
     prev = dict()
-
+    """
+    def d(u, v):
+        r = avg(paths[u+"-"+v])
+        return r if r > 0 else .5
+    """
+    def d(u, v):
+        r = max(paths[u+"-"+v])
+        return r if r > 0 else 1
+    #"""
     def min_dist():
         min = next(iter(queue))
         for u in queue:
@@ -44,18 +55,21 @@ def dijkstra(paths, vertex="51.11,17.02"):
         adjs = find_adjecent(u)
 
         for v in adjs:
-            alt = dist[u] + max(paths[u+"-"+v])
-            if not dist[v] or alt < dist[v]:
+            alt = dist[u] + d(u,v)
+            if alt < dist[v]:
                 dist[v] = alt
                 prev[v] = u
 
     dest = dest_orig = "42.25,11.75"
     path = []
-    while prev.has_key(dest):
+    while dest in prev:
         path.append(dest)
         dest = prev[dest]
     path.reverse()
 
     return path, dist[dest_orig]
 
-print dijkstra(paths)
+path, dist = algo(paths)
+for l in path:
+    print (l)
+print (dist)
